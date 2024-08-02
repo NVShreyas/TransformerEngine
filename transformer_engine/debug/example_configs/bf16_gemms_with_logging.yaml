@@ -9,18 +9,18 @@ bf16_gemm_fprop_mlp:
     start_step: 1000 # train step to start logging
     end_step: 5000 # train step to stop logging
   transformer_engine: # namespace specific features
-  collect_tensor_statistics: # collect statistics for high precision tensors
-    type: [cur_amax, dynamic_range] # Statistics to log for the selected layers. 
-    tensor: [activation, weight, gradient] # tensors to log
-    freq: 1000 # logging freq per train step
-    start_step: 1000 # train step to start logging
-    end_step: 5000 # train step to stop logging
-  collect_fp8_tensor_statistics: # collect statistics for FP8 tensors
-    type: [underflows, overflows] # Statistics to log for the selected layers. 
-    tensor: [activation, gradient] # tensors to log
-    freq: 1000 # logging freq per train step
-    start_step: 1000 # train step to start logging
-    end_step: 5000 # train step to stop logging
-  disable_fp8_gemm:
-    enabled: True
-    gemms: [fprop] # GEMMs will run in BF16 for FP8 training.
+    collect_tensor_statistics: # collect statistics for high precision tensors
+      type: [cur_amax, dynamic_range] # Statistics to log for the selected layers. 
+      tensor: [activation, weight, gradient] # tensors to log
+      freq: 1000 # logging freq per train step
+      start_step: 1000 # train step to start logging
+      end_step: 5000 # train step to stop logging
+    collect_fp8_tensor_statistics: # collect statistics for FP8 tensors
+      type: [underflows, overflows] # Statistics to log for the selected layers. 
+      tensor: [activation, gradient] # tensors to log
+      freq: 1000 # logging freq per train step
+      start_step: 1000 # train step to start logging
+      end_step: 5000 # train step to stop logging
+    disable_fp8_gemm:
+      enabled: True
+      gemms: [fprop] # GEMMs will run in BF16 for FP8 training.

@@ -4,8 +4,8 @@ bf16_gemm_fprop_mlp:
     layer_name_regex_pattern: .*(fc1|fc2) # Select layers with regex pattern. In this case, any layer ending with fc1 or fc2 is selected.
   transformer_engine: # transformer_engine namespace
     disable_fp8_gemm: # feature to disable fp8 gemm
-    enabled: True
-    gemms: [wgrad, dgrad] # GEMMs will run in BF16 for FP8 training.
-  per_tensor_scaling: # feature to enable per tensor current scaling
-    enabled: True
-    gemms: [fprop] # select gemms for current scaling. Must not include gemms that are FP8 disabled.
+      enabled: True
+      gemms: [wgrad, dgrad] # GEMMs will run in BF16 for FP8 training.
+    per_tensor_scaling: # feature to enable per tensor current scaling
+      enabled: True
+      gemms: [fprop] # select gemms for current scaling. Must not include gemms that are FP8 disabled.
