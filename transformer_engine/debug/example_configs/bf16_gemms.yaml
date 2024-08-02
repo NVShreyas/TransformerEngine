@@ -1,0 +1,8 @@
+bf16_gemm_fprop_mlp:
+  enabled: True
+  layers:
+    layer_name_regex_pattern: .*(fc1|fc2) # Select layers with regex pattern. In this case, any layer ending with fc1 or fc2 is selected.
+  transformer_engine:
+    disable_fp8_gemm: 
+      enabled: True
+      gemms: [fprop] # GEMMs will run in BF16 for FP8 training.

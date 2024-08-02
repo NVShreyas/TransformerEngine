@@ -1,0 +1,7 @@
+fp8_disabled_self_attention:
+  enabled: True
+  layers:
+    layer_name_regex_pattern: .*(?:[1-9]|1[0-2])\..*(self).* # Select layers with regex pattern. In this case, any layer containing self (self_attention) is selected.
+  transformer_engine:
+    disable_fp8_layer: # Selected layers will run entirely in BF16 for FP8 training.
+      enabled: True 

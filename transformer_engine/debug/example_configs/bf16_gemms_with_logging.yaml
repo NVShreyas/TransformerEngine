@@ -1,0 +1,26 @@
+bf16_gemm_fprop_mlp:
+  enabled: True
+  layer:
+    layer_name_regex_pattern: .*(fc1|fc2) # Select layers with regex pattern. In this case, any layer ending with fc1 or fc2 is selected.
+  collect_tensor_statistics: # generic statistics collection
+    type: [mean, std, l1_norm] # Statistics to log for the selected layers. 
+    tensor: [weight] # tensors to log
+    freq: 1000 # logging freq per train step
+    start_step: 1000 # train step to start logging
+    end_step: 5000 # train step to stop logging
+  transformer_engine: # namespace specific features
+  collect_tensor_statistics: # collect statistics for high precision tensors
+    type: [cur_amax, dynamic_range] # Statistics to log for the selected layers. 
+    tensor: [activation, weight, gradient] # tensors to log
+    freq: 1000 # logging freq per train step
+    start_step: 1000 # train step to start logging
+    end_step: 5000 # train step to stop logging
+  collect_fp8_tensor_statistics: # collect statistics for FP8 tensors
+    type: [underflows, overflows] # Statistics to log for the selected layers. 
+    tensor: [activation, gradient] # tensors to log
+    freq: 1000 # logging freq per train step
+    start_step: 1000 # train step to start logging
+    end_step: 5000 # train step to stop logging
+  disable_fp8_gemm:
+    enabled: True
+    gemms: [fprop] # GEMMs will run in BF16 for FP8 training.
