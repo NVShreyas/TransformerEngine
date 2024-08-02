@@ -1,4 +1,4 @@
-bf16_gemm_fprop_mlp:
+bf16_dgrad_wgrad_fprop_current_scaling_mlp:
   enabled: True
   layers:
     layer_name_regex_pattern: .*(fc1|fc2) # Select layers with regex pattern. In this case, any layer ending with fc1 or fc2 is selected.
@@ -9,3 +9,15 @@ bf16_gemm_fprop_mlp:
     per_tensor_scaling: # feature to enable per tensor current scaling
       enabled: True
       gemms: [fprop] # select gemms for current scaling. Must not include gemms that are FP8 disabled.
+    collect_tensor_stats: # Transformer_engine specific statistics for high precision tensors
+      enabled: True
+      type: [cur_amax, dynamic_range] # type of statistics
+      tensors: [activation, weight] # tensors to collect statistics from
+      freq: 100 # logging frequency in train steps
+      start_step: 1000 # start train step for logging
+    collect_fp8_tensor_stats: # Transformer_engine specific FP8 statistics
+      enabled: True
+      type: [underflows, overflows] # type of statistics
+      tensors: [gradient] # tensors to collect statistics from
+      freq: 100 # logging frequency in train steps
+      start_step: 1000 # start train step for logging

@@ -1,0 +1,16 @@
+# This config is used when FP8 training is ON
+
+mlp_fake_quant_current_scaling:
+  enabled: True
+  layers:
+    layer_name_regex_pattern: .*(fc1|fc2) # Select layers if they end in fc1 or fc2
+  transformer_engine: # namespace
+    disable_fp8_gemm: # Disable FP8 GEMM. FProp run in high precision
+      gemms: [fprop]
+    per_tensor_scaling: # Scale DGrad inputs using per tensor current scaling and run FP8 GEMM
+      gemms: [dgrad]
+    fake_quant_fp8: # Disable FP8 GEMM for WGrad. Fake quantize inputs to WGrad and run high precision GEMM
+      gemms: [wgrad]
+      fp8_format: # fp8 format to cast to
+        gradient: E5M2
+        activation: E4M3
